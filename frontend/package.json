@@ -1,0 +1,9 @@
+{
+  "name": "eth_frontend",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "web3": "^1.5.2"
+  }
+}
