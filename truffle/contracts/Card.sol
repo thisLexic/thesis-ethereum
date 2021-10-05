@@ -7,6 +7,9 @@ contract Card is Branch {
         string name;
         uint256 idNumber;
         bool isValid;
+        string profession; 
+        uint256 dateOfBirth;
+        uint256 expirationDate;
         PrcBranch issuedAt;
         uint256 issuedOnCount;
         mapping(uint256 => uint256) issuedOn;
@@ -24,11 +27,17 @@ contract Card is Branch {
         string memory _name,
         uint256 _idNumber,
         uint256 _idNumberBranch
+        string profession; 
+        uint256 dateOfBirth;
+        uint256 expirationDate;
     ) public onlyOwner {
         PrcBranch memory branch = branches[_idNumberBranch];
 
         cards[_idNumber].name = _name;
         cards[_idNumber].idNumber = _idNumber;
+        cards[_idNumber].profession = _profession;
+        cards[_idNumber].dateOfBirth = _dateOfBirth;
+        cards[_idNumber].expirationDate = _expirationDate;
         cards[_idNumber].isValid = true;
         cards[_idNumber].issuedAt = branch;
         cards[_idNumber].issuedOnCount = 1;
