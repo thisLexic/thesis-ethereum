@@ -32,7 +32,7 @@ contract Card {
         return ipfsHash;
     }
 
-    function viewCard(uint256 _idNumber){
+    function viewCard(){
         return ipfsHash;
     }
 }
