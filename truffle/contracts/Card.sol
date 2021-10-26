@@ -23,5 +23,13 @@ contract Card {
         issuedOn[1] = block.timestamp;
         ipfsHash = _ipfsHash;
     }
+
+    function setHash(string memory _ipfsHash) public {
+        ipfsHash = _ipfsHash;
+    }
+
+    function getHash() public view returns (string memory) {
+        return ipfsHash;
+    }
 }
 
