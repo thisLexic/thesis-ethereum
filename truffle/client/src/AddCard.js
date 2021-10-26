@@ -2,16 +2,19 @@ import React, { useEffect, useState } from "react";
 
 const AddCard = (s) => {
     const [state, setState] = useState({});
+
     const [modalStatus, setModalStatus] = useState(false);
     useEffect(() => {
         setState(s.state);
     }, [s.state])
 
+    console.log(state.contract)
+
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         let obj = state;
 
-        setState({ ...state, [name]: value })
+        setState({ ...obj, [name]: value })
 
     }
 
@@ -22,7 +25,7 @@ const AddCard = (s) => {
     const handleSubmitCard = async () => {
         const { name, idNumber, idNumberBranch, profession, birthDate, expDate } = state;
         const result = await state.contract.methods
-            .createCard(name, idNumber, idNumberBranch, profession, birthDate, expDate)
+            .createCard(idNumberBranch, idNumber, name)
             .send({ from: state.accounts[0] });
         console.log(result);
         setModalStatus(true);

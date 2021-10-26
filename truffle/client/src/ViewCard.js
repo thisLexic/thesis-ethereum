@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 
 const ViewCard = (s) => {
   const [state, setState] = useState({});
+  const [modalStatus, setModalStatus] = useState(false);
   const [result, setResult] = useState({
     idNumber: "",
     name:"",
@@ -15,8 +16,14 @@ const ViewCard = (s) => {
     setState(s.state);
   }, [s.state])
 
+  const onClose = e => {
+    setModalStatus(false)
+  };
+
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
+    
     let obj = state;
 
     setState({ ...state, [name]: value })
@@ -39,15 +46,21 @@ const ViewCard = (s) => {
     const { idNumber } = state;
     await state.contract.methods.getCardInfo(idNumber).call().then(
       (resultArray => {
-        let obj = {
-          idNumber:resultArray[0],
-          name:resultArray[1],
-          currentValidity:resultArray[2],
-          profession:resultArray[3],
-          birthDate:resultArray[4],
-          expDate:resultArray[5],
+        if (resultArray[1]==""){
+          setModalStatus(true)
+        } else {
+          let obj = {
+            idNumber:resultArray[0],
+            name:resultArray[1],
+            currentValidity:resultArray[2],
+            profession:resultArray[3],
+            birthDate:resultArray[4],
+            expDate:resultArray[5],
+          }
+          setResult( obj )
         }
-        setResult( obj )     
+        
+             
 
       })
     );
@@ -106,7 +119,19 @@ const ViewCard = (s) => {
         
         
       </div>
+      {modalStatus && <div class="modal">
+                <div>Card does not exist.</div>
+                <div>
+                    <button
+                        onClick={e => {
+                            onClose(e);
+                        }}>
+                        X
+                </button>
+                </div>
 
+
+            </div>}
     </div>
   )
 }

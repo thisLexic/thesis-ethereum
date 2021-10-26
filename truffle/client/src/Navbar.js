@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from 'react-router-dom';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { useEffect, useState } from "react";
-import CardContract from "./contracts/Card.json";
+import CardManager from "./contracts/CardManager.json";
 import getWeb3 from "./getWeb3";
 import AddBranch from './AddBranch';
 import ViewCard from './ViewCard';
@@ -19,9 +19,9 @@ const Navbar = () => {
         let web3 = await getWeb3()
         let accounts = await web3.eth.getAccounts();
         const networkId = await web3.eth.net.getId();
-        const deployedNetwork = CardContract.networks[networkId];
+        const deployedNetwork = CardManager.networks[networkId];
         const instance = new web3.eth.Contract(
-          CardContract.abi,
+          CardManager.abi,
           deployedNetwork && deployedNetwork.address
         );
         console.log(web3)
