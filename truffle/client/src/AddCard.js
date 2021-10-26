@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from "react";
+import { create } from 'ipfs-http-client';
+
 
 const AddCard = (s) => {
+    const ipfs = create({ host: 'ipfs.infura.io', port: '5001', protocol: 'https' })
     const [state, setState] = useState({});
+    const [card, setCard] = useState({});
 
     const [modalStatus, setModalStatus] = useState(false);
     useEffect(() => {
@@ -12,9 +16,9 @@ const AddCard = (s) => {
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
-        let obj = state;
+        let obj = card;
 
-        setState({ ...obj, [name]: value })
+        setCard({ ...obj, [name]: value })
 
     }
 
@@ -23,11 +27,13 @@ const AddCard = (s) => {
     };
 
     const handleSubmitCard = async () => {
-        const { name, idNumber, idNumberBranch, profession, birthDate, expDate } = state;
+        const { name, idNumber, idNumberBranch, profession, birthDate, expDate } = card;
+        const ipfsresult = await ipfs.add(JSON.stringify(card))
         const result = await state.contract.methods
-            .createCard(idNumberBranch, idNumber, name)
+            .createCard(idNumberBranch, idNumber, name, ipfsresult.path )
             .send({ from: state.accounts[0] });
         console.log(result);
+
         setModalStatus(true);
     };
 
