@@ -1,5 +1,8 @@
 import React, { Component } from "react";
 import CardContract from "./contracts/Card.json";
+import CardManagerContract from "./contracts/CardManager.json"
+import BranchManager from "./contracts/Branch.json"
+import BranchManagerContract from "./contracts/BranchManager.json"
 import getWeb3 from "./getWeb3";
 
 import "./App.css";
@@ -22,9 +25,9 @@ class App extends Component {
 
       // Get the contract instance.
       const networkId = await web3.eth.net.getId();
-      const deployedNetwork = CardContract.networks[networkId];
+      const deployedNetwork = CardManagerContract.networks[networkId];
       const instance = new web3.eth.Contract(
-        CardContract.abi,
+        CardManagerContract.abi,
         deployedNetwork && deployedNetwork.address
       );
 
@@ -50,9 +53,9 @@ class App extends Component {
   };
 
   handleSubmitCard = async () => {
-    const { name, idNumber, idNumberBranch } = this.state;
+    const { idNumberBranch, name, idNumber } = this.state;
     const result = await this.state.contract.methods
-      .createCard(name, idNumber, idNumberBranch)
+      .createCard(idNumberBranch, name, idNumber)
       .send({ from: this.state.accounts[0] });
     console.log(result);
   };

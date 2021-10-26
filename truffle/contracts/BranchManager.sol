@@ -13,4 +13,6 @@ contract BranchManager {
     function createBranch(uint256 _idNumber, string memory _location) public {
         branches[_idNumber].branch = new Branch(this, _idNumber, _location);
     }
+
+    
 }

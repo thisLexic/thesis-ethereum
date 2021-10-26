@@ -10,6 +10,7 @@ contract Card {
     Branch public branch;
     uint256 public issuedOnCount;
     mapping(uint256 => uint256) public issuedOn;
+    string ipfsHash;
 
     CardManager parentContract;
 
@@ -21,6 +22,14 @@ contract Card {
         branch = _branch;
         issuedOnCount = 1;
         issuedOn[1] = block.timestamp;
+    }
+
+    function setHash(string memory _ipfsHash) public {
+        ipfsHash = _ipfsHash;
+    }
+
+    function getHash() public view returns (string memory) {
+        return ipfsHash;
     }
 }
 
