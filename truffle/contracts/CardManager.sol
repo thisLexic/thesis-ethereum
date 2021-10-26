@@ -14,8 +14,8 @@ contract CardManager {
         cards[_idNumber].card = new Card(this, _branch, _idNumber, _name, _ipfsHash);
     }
 
-    function viewCard(uint256 _idNumber){
-        cards[_idNumber].viewCard();
+    function viewCard(uint256 _idNumber) public view returns(string memory ipfsHash){
+        return (cards[_idNumber].card.getHash());
     }
     
 }
