@@ -31,5 +31,9 @@ contract Card {
     function getHash() public view returns (string memory) {
         return ipfsHash;
     }
+
+    function viewCard(uint256 _idNumber){
+        return ipfsHash;
+    }
 }
 
