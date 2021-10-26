@@ -10,7 +10,8 @@ contract CardManager {
     
     mapping(uint => P_Card) public cards;
     
-    function createCard(string memory _branch, string memory _name, uint256 _idNumber) public {
-        cards[_idNumber].card = new Card(this, _branch, _idNumber, _name);
+    function createCard(string memory _branch, string memory _name, uint256 _idNumber, string memory _ipfsHash) public {
+        cards[_idNumber].card = new Card(this, _branch, _idNumber, _name, _ipfsHash);
     }
+    
 }

@@ -9,10 +9,11 @@ contract Card {
     string public branch;
     uint256 public issuedOnCount;
     mapping(uint256 => uint256) public issuedOn;
+    string public ipfsHash;
 
     CardManager parentContract;
 
-    constructor(CardManager _parentContract, string memory _branch, uint256 _idNumber, string memory _name) public {
+    constructor(CardManager _parentContract, string memory _branch, uint256 _idNumber, string memory _name, string memory _ipfsHash) public {
         parentContract = _parentContract;
         name = _name;
         idNumber = _idNumber;
@@ -20,6 +21,7 @@ contract Card {
         branch = _branch;
         issuedOnCount = 1;
         issuedOn[1] = block.timestamp;
+        ipfsHash = _ipfsHash;
     }
 }
 
