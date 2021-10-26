@@ -17,7 +17,7 @@ const AddCard = (s) => {
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         let obj = card;
-
+        console.log(obj)
         setCard({ ...obj, [name]: value })
 
     }
@@ -27,7 +27,7 @@ const AddCard = (s) => {
     };
 
     const handleSubmitCard = async () => {
-        const { name, idNumber, idNumberBranch, profession, birthDate, expDate } = card;
+        const {  idNumber, name, idNumberBranch, profession, birthDate, expDate } = card;
         const ipfsresult = await ipfs.add(JSON.stringify(card))
         const result = await state.contract.methods
             .createCard(idNumberBranch, idNumber, name, ipfsresult.path )
