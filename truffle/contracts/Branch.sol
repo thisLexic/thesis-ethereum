@@ -1,19 +1,17 @@
 pragma solidity ^0.8.7;
 
-import "./Ownable.sol";
+import "./BranchManager.sol";
 
-contract Branch is Owner {
-    struct PrcBranch {
-        string location;
-        uint256 idNumber;
-    }
+contract Branch {
+    string public location;
+    uint256 public idNumber;
 
-    mapping(uint256 => PrcBranch) public branches;
+    BranchManager parentContract;
 
-    function createBranch(string memory _location, uint256 _idNumber)
-        public
-        onlyOwner
-    {
-        branches[_idNumber] = PrcBranch(_location, _idNumber);
+    constructor(BranchManager _parentContract, uint256 _idNumber, string memory _location) public {
+        parentContract = _parentContract;
+        idNumber = _idNumber;
+        location = _location;
     }
 }
+
