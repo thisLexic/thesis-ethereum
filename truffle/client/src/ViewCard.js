@@ -10,8 +10,11 @@ const ViewCard = (s) => {
     currentValidity:"",
     profession:"",
     birthDate:"",
-    expDate:"",
+    expDate:""
   });
+  const [hash, setHash] = useState({
+    hash:""
+  })
   useEffect(() => {
     setState(s.state);
   }, [s.state])
@@ -26,7 +29,7 @@ const ViewCard = (s) => {
     
     let obj = state;
 
-    setState({ ...state, [name]: value })
+    setState({ ...obj, [name]: value })
 
   }
 
@@ -39,25 +42,32 @@ const ViewCard = (s) => {
   //     })
   //   );
   // };
-
+  
+  const getObj = async (result) => {
+    return fetch(`https://ipfs.infura.io/ipfs/${result}`)
+    .then((response) => response.json())
+    .then((responseJson) => {
+      setResult( responseJson )
+      setHash({hash:`https://ipfs.infura.io/ipfs/${result}`})
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+ }
 
   const handleSearchCard = async () => {
 
     const { idNumber } = state;
-    await state.contract.methods.getCardInfo(idNumber).call().then(
+    await state.contract.methods.viewCard(idNumber).call().then(
       (resultArray => {
-        if (resultArray[1]==""){
+        if (resultArray==""){
           setModalStatus(true)
         } else {
-          let obj = {
-            idNumber:resultArray[0],
-            name:resultArray[1],
-            currentValidity:resultArray[2],
-            profession:resultArray[3],
-            birthDate:resultArray[4],
-            expDate:resultArray[5],
-          }
-          setResult( obj )
+
+          getObj(resultArray)
+
+          //setResult( obj )
+          //console.log()
         }
         
              
@@ -115,6 +125,8 @@ const ViewCard = (s) => {
             <h4>Expiration Date</h4>
             <h4>{!result.name && <span>&nbsp;</span>}{result.expDate}</h4>
           </div>
+          
+            
         </div>
         
         
@@ -132,6 +144,10 @@ const ViewCard = (s) => {
 
 
             </div>}
+            <div>
+            <h4>hash link</h4>
+            <h4>{!hash.hash && <span>&nbsp;</span>}{hash.hash}</h4>
+          </div>
     </div>
   )
 }
