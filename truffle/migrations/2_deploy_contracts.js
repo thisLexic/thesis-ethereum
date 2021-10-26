@@ -1,5 +1,7 @@
-var Card = artifacts.require("./Card.sol");
+var CardManager = artifacts.require("./CardManager.sol");
+var BranchManager = artifacts.require("./BranchManager.sol");
 
 module.exports = function (deployer) {
-  deployer.deploy(Card);
+  deployer.deploy(CardManager);
+  deployer.deploy(BranchManager);
 };

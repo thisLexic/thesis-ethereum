@@ -1,53 +1,26 @@
 pragma solidity ^0.8.7;
 
 import "./Branch.sol";
+import "./CardManager.sol";
 
-contract Card is Branch {
-    struct PRCCard {
-        string name;
-        uint256 idNumber;
-        bool isValid;
-        PrcBranch issuedAt;
-        uint256 issuedOnCount;
-        mapping(uint256 => uint256) issuedOn;
-    }
+contract Card {
+    string public name;
+    uint256 public idNumber;
+    bool public isValid;
+    Branch public branch;
+    uint256 public issuedOnCount;
+    mapping(uint256 => uint256) public issuedOn;
 
-    mapping(uint256 => PRCCard) public cards;
+    CardManager parentContract;
 
-    event InvalidateCard(uint256 _idNumber, uint256 _issuedOn);
-
-    constructor() {
-        owner = msg.sender;
-    }
-
-    function createCard(
-        string memory _name,
-        uint256 _idNumber,
-        uint256 _idNumberBranch
-    ) public onlyOwner {
-        PrcBranch memory branch = branches[_idNumberBranch];
-
-        cards[_idNumber].name = _name;
-        cards[_idNumber].idNumber = _idNumber;
-        cards[_idNumber].isValid = true;
-        cards[_idNumber].issuedAt = branch;
-        cards[_idNumber].issuedOnCount = 1;
-        cards[_idNumber].issuedOn[1] = block.timestamp;
-    }
-
-    function revalidateCard(uint256 _idNumber) public onlyOwner {
-        cards[_idNumber].isValid = true;
-        cards[_idNumber].issuedOnCount++;
-        cards[_idNumber].issuedOn[cards[_idNumber].issuedOnCount] = block
-            .timestamp;
-    }
-
-    function invalidateCard(uint256 _idNumber) public onlyOwner {
-        cards[_idNumber].isValid = false;
-        emit InvalidateCard(_idNumber, getCardIssuedOn(_idNumber));
-    }
-
-    function getCardIssuedOn(uint256 _idNumber) public view returns (uint256) {
-        return cards[_idNumber].issuedOn[cards[_idNumber].issuedOnCount];
+    constructor(CardManager _parentContract, Branch _branch, uint256 _idNumber, string memory _name) public {
+        parentContract = _parentContract;
+        name = _name;
+        idNumber = _idNumber;
+        isValid = true;
+        branch = _branch;
+        issuedOnCount = 1;
+        issuedOn[1] = block.timestamp;
     }
 }
+
