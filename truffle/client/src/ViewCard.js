@@ -63,7 +63,7 @@ const ViewCard = (s) => {
         if (resultArray==""){
           setModalStatus(true)
         } else {
-
+          state.contract.getPastEvents("CreateCardEvent", {fromBlock: 0,filter: {_idNumber: idNumber}}).then((events) => console.log(events))
           getObj(resultArray)
 
           //setResult( obj )

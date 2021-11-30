@@ -3,21 +3,20 @@ import { create } from 'ipfs-http-client';
 
 
 const AddCard = (s) => {
+    
     const ipfs = create({ host: 'ipfs.infura.io', port: '5001', protocol: 'https' })
     const [state, setState] = useState({});
     const [card, setCard] = useState({});
-
+    
     const [modalStatus, setModalStatus] = useState(false);
     useEffect(() => {
         setState(s.state);
     }, [s.state])
 
-    console.log(state.contract)
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         let obj = card;
-        console.log(obj)
         setCard({ ...obj, [name]: value })
 
     }
@@ -27,13 +26,12 @@ const AddCard = (s) => {
     };
 
     const handleSubmitCard = async () => {
-        const {  idNumber, name, idNumberBranch, profession, birthDate, expDate } = card;
+        const {  idNumber, name, idNumberBranch } = card;
         const ipfsresult = await ipfs.add(JSON.stringify(card))
         const result = await state.contract.methods
             .createCard(idNumberBranch, idNumber, name, ipfsresult.path )
             .send({ from: state.accounts[0] });
-        console.log(result);
-
+        //console.log(result.events.cardCreated.returnValues);
         setModalStatus(true);
     };
 
