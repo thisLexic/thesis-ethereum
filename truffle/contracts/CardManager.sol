@@ -13,18 +13,18 @@ contract CardManager {
     
     mapping(uint => P_Card) public cards;
     
-    function createCard(string memory _branch, uint256 _idNumber,  string memory _name, string memory _ipfsHash) public {
-        cards[_idNumber].card = new Card(this, _branch, _idNumber, _name, _ipfsHash);
+    function createCard(uint256 _idNumber,  string memory _name, string memory _ipfsHash) public {
+        cards[_idNumber].card = new Card(this, _idNumber, _ipfsHash);
         emit CreateCardEvent(_idNumber, _ipfsHash);
     }
 
-    function editCard(string memory _branch, uint256 _idNumber,  string memory _name, string memory _ipfsHash) public {
-        cards[_idNumber].card = new Card(this, _branch, _idNumber, _name, _ipfsHash);
+    function editCard(uint256 _idNumber,  string memory _name, string memory _ipfsHash) public {
+        cards[_idNumber].card = new Card(this, _idNumber, _ipfsHash);
         emit EditCardEvent(_idNumber, _ipfsHash);
     }
 
-    function renewCard(string memory _branch, uint256 _idNumber,  string memory _name, string memory _ipfsHash) public {
-        cards[_idNumber].card = new Card(this, _branch, _idNumber, _name, _ipfsHash);
+    function renewCard(uint256 _idNumber,  string memory _name, string memory _ipfsHash) public {
+        cards[_idNumber].card = new Card(this, _idNumber, _ipfsHash);
         emit RenewCardEvent(_idNumber, _ipfsHash);
     }
 
