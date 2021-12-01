@@ -5,7 +5,6 @@ import "./Card.sol";
 contract CardManager {
     
     event CreateCardEvent(uint indexed _idNumber, string _ipfsHash);
-    event Validation()
     struct P_Card {
         Card card;
     }
