@@ -23,7 +23,7 @@ contract CardManager {
         emit EditCardEvent(_idNumber, _ipfsHash);
     }
 
-    function RenewCard(string memory _branch, uint256 _idNumber,  string memory _name, string memory _ipfsHash) public {
+    function renewCard(string memory _branch, uint256 _idNumber,  string memory _name, string memory _ipfsHash) public {
         cards[_idNumber].card = new Card(this, _branch, _idNumber, _name, _ipfsHash);
         emit RenewCardEvent(_idNumber, _ipfsHash);
     }
