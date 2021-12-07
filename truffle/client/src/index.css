@@ -83,7 +83,7 @@ a:visited {
  }
 
 
-.AddCard, .AddBranch{
+.AddCard{
   display: flex;
   flex-direction: column;
   align-content: center;
@@ -142,6 +142,10 @@ a:visited {
   width: 20vw;
 }
 
+.cpdModal input {
+  width: 14vw;
+}
+
 
 button{
   color: white;
@@ -181,8 +185,15 @@ input {
 }
 
 .card img {
-  width:120px;
-  padding: 70px;
+  width: 120px;
+  
+  padding: 0 70px ;
+  padding-top: 120px;
+  
+}
+.card .cpd {
+  
+  padding: 30px 40px ;
   
 }
 
@@ -204,4 +215,39 @@ input {
   color: white;
   text-align: left;
   justify-content: center;
+}
+
+.edit {
+  margin: 1em;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 1em;
+}
+
+.cpdModal {
+  display: flex;
+  font-family: "gotham",
+    sans-serif;
+  position: fixed;
+  width: 70%;
+  height: 75%;
+  z-index: 100;
+  left: 50%;
+  top: 50%;
+  flex-direction: column;
+  align-content: center;
+  transform: translate(-50%, -50%);
+  border-radius: 20px;
+  background: white;
+  margin: auto;
+}
+
+.AddCPD{
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  width: 70%;
+  margin: auto;
+  padding-top: 2em;
 }

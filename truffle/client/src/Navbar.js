@@ -4,10 +4,10 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { useEffect, useState } from "react";
 import CardManager from "./contracts/CardManager.json";
 import getWeb3 from "./getWeb3";
-import AddBranch from './AddBranch';
 import ViewCard from './ViewCard';
 import AddCard from './AddCard';
 import Home from './Home';
+import AddCPDUnits from './AddCPDUnits';
 
 
 const Navbar = () => {
@@ -30,16 +30,6 @@ const Navbar = () => {
 
       aquireWeb3()
       console.log(state)
-
-      //const deployedNetwork = CardContract.networks[networkId];
-      // const instance = new web3.eth.Contract(
-      //   CardContract.abi,
-      //   deployedNetwork && deployedNetwork.address
-      // );
-
-      // Set web3, accounts, and contract to the state, and then proceed with an
-      // example of interacting with the contract's methods.
-      //setState({ web3});
     }, [])
   return (
     <Router>
@@ -54,9 +44,6 @@ const Navbar = () => {
             </li>
             <li>
               <Link to="/addcard" >Add Card</Link>
-            </li>
-            <li>
-              <Link to="/addbranch" >Add Branch</Link>
             </li>
             <li>
               <Link to="/viewCard" >View Card</Link>
@@ -75,9 +62,6 @@ const Navbar = () => {
         </Route>
         <Route path="/addcard">
           <AddCard state={state} />
-        </Route>
-        <Route path="/addbranch">
-          <AddBranch state={state} />
         </Route>
         <Route path="/viewCard">
           <ViewCard state={state} />

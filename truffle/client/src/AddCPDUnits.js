@@ -2,15 +2,17 @@ import React, { useEffect, useState } from "react";
 import { create } from 'ipfs-http-client';
 
 
-const AddCard = (s) => {
+const AddCPDUnits = (s) => {
     
     const ipfs = create({ host: 'ipfs.infura.io', port: '5001', protocol: 'https' })
     const [state, setState] = useState({});
+    const [result,setResult] = useState({});
     const [card, setCard] = useState({cpdUnits: "0"});
     
     const [modalStatus, setModalStatus] = useState(false);
     useEffect(() => {
         setState(s.state);
+        setResult(s.res)
     }, [s.state])
 
 
@@ -54,55 +56,30 @@ const AddCard = (s) => {
         return <div></div>;
     }
     return (
-        <div class="AddCard">
+        <div class="AddCPD">
             <div class="title">
-                <h3>Add Card</h3>
+                <h3>Add CPD Units</h3>
             </div>
+            <span>Registration No.: {result.idNumber}</span>
+            <span>Full Name: {result.lastName}, {result.firstName}, {result.middleName} </span>
             
-            <span>Last Name</span>
+            <span>Profession: {result.profession}</span>
+            
+            <span>Units: </span>
             <input
                 type="text"
-                name="lastName"
-                value={state.lastName}
+                name="units"
+                value={state.units}
                 onChange={e => handleInputChange(e)}
             />
-            <span>First Name</span>
+            <span>Institution: </span>
             <input
                 type="text"
-                name="firstName"
-                value={state.firstName}
+                name="institution"
+                value={state.institution}
                 onChange={e => handleInputChange(e)}
-            />
-            <span>Middle Name</span>
-            <input
-                type="text"
-                name="middleName"
-                value={state.middleName}
-                onChange={e => handleInputChange(e)}
-            />
-            <span>Registration No.</span>
-            <input
-                type="text"
-                name="idNumber"
-                value={state.idNumber}
-                onChange={e => handleInputChange(e)}
-            />
-
-            <span>Registration Date</span>
-            <input
-                type="date"
-                name="regDate"
-                value={state.regDate}
-                onChange={e => handleInputChangeDate(e)}
             />
             
-            <span>Profession</span>
-            <input
-                type="text"
-                name="profession"
-                value={state.profession}
-                onChange={e => handleInputChange(e)}
-            />
 
             <button type="button" onClick={() => handleSubmitCard()}>
                 SUBMIT
@@ -124,4 +101,4 @@ const AddCard = (s) => {
     )
 }
 
-export default AddCard;
+export default AddCPDUnits;
