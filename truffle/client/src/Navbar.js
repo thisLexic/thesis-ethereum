@@ -7,14 +7,13 @@ import getWeb3 from "./getWeb3";
 import ViewCard from './ViewCard';
 import AddCard from './AddCard';
 import Home from './Home';
-import AddCPDUnits from './AddCPDUnits';
+
 
 
 const Navbar = () => {
   const [state, setState] = useState({});
   useEffect(
     () => {
-      //const web3 = await getWeb3();
       async function aquireWeb3() {
         let web3 = await getWeb3()
         let accounts = await web3.eth.getAccounts();
@@ -23,14 +22,13 @@ const Navbar = () => {
         const instance = new web3.eth.Contract(
           CardManager.abi,
           deployedNetwork && deployedNetwork.address
-        );
-        console.log(web3)
-        setState({ web3: web3, accounts: accounts, contract: instance });
+        );        
+        setState({ web3: web3, accounts: accounts, contract: instance});
       }
 
       aquireWeb3()
-      console.log(state)
-    }, [])
+      
+    }, [state.accounts])
   return (
     <Router>
       <div class="Navbar">
@@ -58,7 +56,7 @@ const Navbar = () => {
       </div>
       <Switch>
         <Route exact path="/">
-          <Home />
+          <Home state={state}/>
         </Route>
         <Route path="/addcard">
           <AddCard state={state} />

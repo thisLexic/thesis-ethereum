@@ -6,32 +6,20 @@ const AddCPDUnits = (s) => {
     
     const ipfs = create({ host: 'ipfs.infura.io', port: '5001', protocol: 'https' })
     const [state, setState] = useState({});
-    const [result,setResult] = useState({});
-    const [card, setCard] = useState({cpdUnits: "0"});
+    const [card, setCard] = useState({});
+    const [cpdTaken, setCpdTaken] = useState({});
     
     const [modalStatus, setModalStatus] = useState(false);
     useEffect(() => {
-        setState(s.state);
-        setResult(s.res)
+        setState(s.state)
+        setCard(s.res)
     }, [s.state])
 
-
+    
     const handleInputChange = (e) => {
-        const { name, value } = e.target;
-        let obj = card;
-        setCard({ ...obj, [name]: value })
-
-    }
-    const handleInputChangeDate = (e) => {
-        const { name, value } = e.target;
-        let dateParse = value.split("-")
-        let valid = `${parseInt(dateParse[0])+3}-${dateParse[1]}-${('0'+String(parseInt(dateParse[2])-1)).slice(-2)}`
-        console.log(valid)
-
-        let obj = card;
-
-        setCard({ ...obj, [name]: value, validUntil:valid})
-
+        const { name, value } = e.target
+        let obj = cpdTaken;
+        setCpdTaken({ ...obj, [name]: value })
     }
 
     const onClose = e => {
@@ -39,13 +27,22 @@ const AddCPDUnits = (s) => {
     };
 
     const handleSubmitCard = async () => {
-
+        let obj = card
+        console.log(cpdTaken)
+        obj.cpdUnits = (+cpdTaken.units) + (+obj.cpdUnits)
+        if (obj.cpdTaken){
+            obj.cpdTaken = [...obj.cpdTaken,cpdTaken]
+        } else {
+            obj.cpdTaken= [cpdTaken]
+        }
+        
+        setCard({ ...obj})
+        console.log(card)
         const ipfsresult = await ipfs.add(JSON.stringify(card))
 
         await state.contract.methods
-            .createCard(card.idNumber, ipfsresult.path )
+            .editCard(card.idNumber, ipfsresult.path )
             .send({ from: state.accounts[0] });
-        //console.log(result.events.cardCreated.returnValues);
         setModalStatus(true);
     };
 
@@ -60,10 +57,10 @@ const AddCPDUnits = (s) => {
             <div class="title">
                 <h3>Add CPD Units</h3>
             </div>
-            <span>Registration No.: {result.idNumber}</span>
-            <span>Full Name: {result.lastName}, {result.firstName}, {result.middleName} </span>
+            <span>Registration No.: {card.idNumber}</span>
+            <span>Full Name: {card.lastName}, {card.firstName}, {card.middleName} </span>
             
-            <span>Profession: {result.profession}</span>
+            <span>Profession: {card.profession}</span>
             
             <span>Units: </span>
             <input
@@ -85,7 +82,7 @@ const AddCPDUnits = (s) => {
                 SUBMIT
             </button>
             {modalStatus && <div class="modal">
-                <div>Card Created!</div>
+                <div>CPD Units Added!</div>
                 <div>
                     <button
                         onClick={e => {

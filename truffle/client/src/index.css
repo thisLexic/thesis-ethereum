@@ -158,6 +158,7 @@ button{
   font-size: 1em;
   font-family: "gotham",
   sans-serif;
+  cursor: pointer;
 }
 
 input {
@@ -250,4 +251,8 @@ input {
   width: 70%;
   margin: auto;
   padding-top: 2em;
+}
+
+button:active {
+  background-color: #1E269E;
 }

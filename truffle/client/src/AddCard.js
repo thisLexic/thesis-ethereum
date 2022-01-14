@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { create } from 'ipfs-http-client';
+import EthCrypto from 'eth-crypto';
 
 
 const AddCard = (s) => {
@@ -12,7 +13,6 @@ const AddCard = (s) => {
     useEffect(() => {
         setState(s.state);
     }, [s.state])
-
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -37,8 +37,13 @@ const AddCard = (s) => {
     };
 
     const handleSubmitCard = async () => {
+        let currentAcc = JSON.parse(localStorage.getItem("account"))
+        const encrypted = await EthCrypto.encryptWithPublicKey(
+            currentAcc.publicKey ,// publicKey
+            JSON.stringify(card) // message
+        );
 
-        const ipfsresult = await ipfs.add(JSON.stringify(card))
+        const ipfsresult = await ipfs.add(JSON.stringify(encrypted))
 
         await state.contract.methods
             .createCard(card.idNumber, ipfsresult.path )

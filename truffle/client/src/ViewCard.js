@@ -1,25 +1,18 @@
 import React, { useEffect, useState } from "react";
-import { Link } from 'react-router-dom';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Table from 'react-bootstrap/Table';
 import AddCPDUnits from './AddCPDUnits';
+import { create } from 'ipfs-http-client';
+import EthCrypto from 'eth-crypto';
 
 const ViewCard = (s) => {
+  const ipfs = create({ host: 'ipfs.infura.io', port: '5001', protocol: 'https' })
   const [state, setState] = useState({});
   const [modalStatus, setModalStatus] = useState({
     message: "",
     bool: false
   });
   const [cpdModal, setCpdModal] = useState(false);
-  const [result, setResult] = useState({
-    idNumber: "",
-    firstName: "",
-    lastName: "",
-    middleName: "",
-    profession: "",
-    regDate: "",
-    validUntil: ""
-  });
+  const [result, setResult] = useState({});
 
   const [transactions, setTransactions] = useState([]);
 
@@ -49,56 +42,98 @@ const ViewCard = (s) => {
 
   }
 
-  // handleGetCardCount = async () => {
-
-  //   await this.state.contract.methods.getCardCount().call().then(
-  //     (resultArray => {
-  //       console.log(resultArray)
-  //       this.setState({ cardCount: this.state.cardCount = resultArray[0] })
-  //     })
-  //   );
-  // };
   useEffect(() => {
     if (!transactions.length == 0) {
-      let ipfs = transactions.slice(-1)
-      getObj(ipfs[0].ipfsHash)
+      getObj(transactions[0].ipfsHash)
+    } else {
+      setResult({})
     }
 
   }, [transactions])
 
   const getObj = async (result) => {
-    return fetch(`https://ipfs.infura.io/ipfs/${result}`)
+    let currentAcc = JSON.parse(localStorage.getItem("account"))
+    fetch(`https://ipfs.infura.io/ipfs/${result}`)
       .then((response) => response.json())
       .then((responseJson) => {
-        setResult(responseJson)
+        EthCrypto.decryptWithPrivateKey(currentAcc.privateKey,responseJson).then(e =>
+          setResult(JSON.parse(e))
+        )
       })
       .catch((error) => {
         console.error(error);
       });
   }
 
-  const handleSearchCard = async () => {
-    setTransactions([])
+  const handleRenewCard = async () => {
+    let obj = result
+    obj.cpdUnits = "0"
+    obj.cpdTaken = []
+    let dateParse = obj.regDate.split("-")
+    obj.regDate = `${parseInt(dateParse[0]) + 3}-${dateParse[1]}-${('0' + String(parseInt(dateParse[2]))).slice(-2)}`
+    obj.validUntil = `${parseInt(dateParse[0]) + 6}-${dateParse[1]}-${('0' + String(parseInt(dateParse[2]) - 1)).slice(-2)}`
+    setResult({ ...obj })
+    const ipfsresult = await ipfs.add(JSON.stringify(result))
 
+    await state.contract.methods
+      .renewCard(result.idNumber, ipfsresult.path)
+      .send({ from: state.accounts[0] });
+    setModalStatus({ message: "Card Renewed!", bool: true });
+  };
+
+  const handleSearchCard = async () => {
     const { idNumber } = state;
     if (!isNaN(parseInt(idNumber))) {
+      let event = []
+
       await state.contract.getPastEvents("CreateCardEvent", { fromBlock: 0, filter: { _idNumber: idNumber } }).then(
-        (events) => {
-          console.log(events.length)
-          if (events.length == 0) {
-            setModalStatus({ message: "Card does not exist.", bool: true })
-          } else {
-            events.forEach(e => {
-              let t = {
-                transactionHash: e.transactionHash,
-                event: e.event,
-                ipfsHash: e.returnValues._ipfsHash
-              }
-              let currentTransactions = (prev => [...prev, t]);
-              setTransactions(currentTransactions);
-            })
-          }
-        })
+        element => {
+          element.forEach(e => {
+            let t = {
+              blockNumber: e.blockNumber,
+              transactionHash: e.transactionHash,
+              event: e.event,
+              ipfsHash: e.returnValues._ipfsHash
+            }
+            event.push(t)
+          })
+        }
+      )
+
+      await state.contract.getPastEvents("EditCardEvent", { fromBlock: 0, filter: { _idNumber: idNumber } }).then(
+        element => {
+          element.forEach(e => {
+            let t = {
+              blockNumber: e.blockNumber,
+              transactionHash: e.transactionHash,
+              event: e.event,
+              ipfsHash: e.returnValues._ipfsHash
+            }
+            event.push(t)
+          })
+        }
+      )
+
+      await state.contract.getPastEvents("RenewCardEvent", { fromBlock: 0, filter: { _idNumber: idNumber } }).then(
+        element => {
+          element.forEach(e => {
+            let t = {
+              blockNumber: e.blockNumber,
+              transactionHash: e.transactionHash,
+              event: e.event,
+              ipfsHash: e.returnValues._ipfsHash
+            }
+            event.push(t)
+          })
+        }
+      )
+      setTransactions(event.sort((a, b) => {
+        return b.blockNumber - a.blockNumber;
+      }))
+
+      if (event.length == 0) {
+        setModalStatus({ message: "Card does not exist.", bool: true })
+      }
     } else {
       setModalStatus({ message: "Please input an integer.", bool: true })
     }
@@ -137,6 +172,9 @@ const ViewCard = (s) => {
           <div class="cpd">
             <h4>Current CPD Units: {result.cpdUnits}</h4>
           </div>
+          {result.cpdUnits == "9" && <button type="button" onClick={() => handleRenewCard()}>
+            Renew
+          </button>}
         </div>
         <div class="results">
           <div>
@@ -172,15 +210,12 @@ const ViewCard = (s) => {
 
 
       </div>
-      <div class="edit">
-        <button type="button" onClick = { e => {onCPDClick(e) }}>
+      {result.idNumber && <div class="edit">
+        <button type="button" onClick={e => { onCPDClick(e) }}>
           Add CPD Units
           </button>
-        <button type="button">
-          Renew
-          </button>
+      </div>}
 
-      </div>
       {modalStatus.bool && <div class="modal">
         <div>{modalStatus.message}</div>
         <div>
@@ -191,11 +226,11 @@ const ViewCard = (s) => {
       </div>}
 
       {cpdModal && <div class="cpdModal">
-        <div><button onClick={e => {onCPDClose(e)}}>
-            X
+        <div><button onClick={e => { onCPDClose(e) }}>
+          X
           </button>
-          <AddCPDUnits state={state} res = {result}/>
-          </div>
+          <AddCPDUnits state={state} res={result} />
+        </div>
       </div>}
 
       {!transactions.length == 0 && <div>
