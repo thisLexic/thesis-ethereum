@@ -1,0 +1,76 @@
+import React, { useEffect, useState } from "react";
+import { useHistory, Link } from 'react-router-dom';
+import EthCrypto from 'eth-crypto';
+import axios from "axios"
+import CardManager from "./contracts/CardManager.json";
+import getWeb3 from "./getWeb3";
+
+const Register = (s) => {
+    let history = useHistory();
+    const [state, setState] = useState({});
+
+    useEffect(() => {
+        setState(s.state);
+      }, [s.state])
+
+    const [input, setInput] = useState({
+        user: '',
+        password: '',
+        confirmPassword: ''
+    })
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        let obj = input;
+        setInput({ ...obj, [name]: value })
+    }
+
+    const handleLogin = async (e) => {
+        e.preventDefault();
+        if (input.password != input.confirmPassword) alert("Passwords do not match!")
+
+        const newUser = {
+            user: input.user,
+            password: input.password,
+            address: state.accounts[0]
+        }
+
+        axios.post('http://localhost:3001/register', newUser)
+    }
+
+    return (
+        <div class="register">
+            <div>
+                <span>Username</span>
+                <input
+                    type="text"
+                    name="user"
+                    placeholder="username"
+                    value={input.user}
+                    onChange={e => handleChange(e)}
+                />
+                <span>Password</span>
+                <input
+                    type="password"
+                    name="password"
+                    placeholder="password"
+                    value={input.password}
+                    onChange={e => handleChange(e)}
+                />
+                <span>Confirm Password</span>
+                <input
+                    type="password"
+                    name="confirmPassword"
+                    placeholder="password"
+                    value={input.confirmPassword}
+                    onChange={e => handleChange(e)}
+                />
+                <button
+                    onClick={e => handleLogin(e)}>
+                    SIGN UP
+                </button>
+            </div>
+        </div>
+    );
+}
+export default Register;
