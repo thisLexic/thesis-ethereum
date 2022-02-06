@@ -2,7 +2,7 @@ pragma solidity ^0.8.7;
 
 import "./Manager.sol";
 
-contract Card {
+contract Request {
     uint256 public idNumber;
     string public ipfsHash;
 
