@@ -14,8 +14,8 @@ contract Manager is AccessControl {
     event RenewCardEvent(uint256 indexed _idNumber, string _ipfsHash);
 
     event RequestCardEvent(address indexed _address, string _ipfsHash);
-    event RequestCPDUnitsEvent(uint256 indexed _idNumber, string _ipfsHash);
-    event RequestRenewalEvent(uint256 indexed _idNumber, string _ipfsHash);
+    event RequestCPDUnitsEvent(address indexed _address, string _ipfsHash);
+    event RequestRenewalEvent(address indexed _address, string _ipfsHash);
 
     struct P_Card {
         Card card;
@@ -26,7 +26,7 @@ contract Manager is AccessControl {
     }
 
     mapping(uint256 => P_Card) public cards;
-    mapping(uint256 => P_Request) public requests;
+    mapping(address => P_Request) public requests;
 
     constructor(address root) public {
         _setupRole(DEFAULT_ADMIN_ROLE, root);
@@ -84,36 +84,36 @@ contract Manager is AccessControl {
         _;
     }
 
-    function requestCard(uint256 _idNumber, string memory _ipfsHash)
+    function requestCard(address _address, string memory _ipfsHash)
         public
         onlyPRCProfessional
     {
-        requests[_idNumber].request = new Request(this, _idNumber, _ipfsHash);
+        requests[_address].request = new Request(this, _address, _ipfsHash);
         emit RequestCardEvent(msg.sender, _ipfsHash);
     }
 
-    function requestCPDUnits(uint256 _idNumber, string memory _ipfsHash)
+    function requestCPDUnits(address _address, string memory _ipfsHash)
         public
         onlyPRCProfessional
     {
-        requests[_idNumber].request = new Request(this, _idNumber, _ipfsHash);
-        emit RequestCPDUnitsEvent(_idNumber, _ipfsHash);
+        requests[_address].request = new Request(this, _address, _ipfsHash);
+        emit RequestCPDUnitsEvent(_address, _ipfsHash);
     }
 
-    function requestRenewal(uint256 _idNumber, string memory _ipfsHash)
+    function requestRenewal(address _address, string memory _ipfsHash)
         public
         onlyPRCProfessional
     {
-        requests[_idNumber].request = new Request(this, _idNumber, _ipfsHash);
-        emit RequestRenewalEvent(_idNumber, _ipfsHash);
+        requests[_address].request = new Request(this, _address, _ipfsHash);
+        emit RequestRenewalEvent(_address, _ipfsHash);
     }
 
-    function viewRequest(uint256 _idNumber)
+    function viewRequest(address _address)
         public
         view
         returns (string memory ipfsHash)
     {
-        return (requests[_idNumber].request.getHash());
+        return (requests[_address].request.getHash());
     }
 
     // Roles
