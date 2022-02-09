@@ -1,5 +1,6 @@
 {
   "dependencies": {
+<<<<<<< HEAD
     "@truffle/hdwallet-provider": "^2.0.0",
     "bcrypt": "^5.0.1",
     "cors": "^2.8.5",
@@ -21,4 +22,9 @@
   "author": "",
   "license": "ISC",
   "description": ""
+=======
+    "@openzeppelin/contracts": "^4.4.2",
+    "dotenv": "^10.0.0"
+  }
+>>>>>>> fc7251022bbf906df8c9b38e4b0497e130bedd67
 }

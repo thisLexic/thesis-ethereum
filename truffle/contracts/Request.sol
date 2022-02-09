@@ -2,19 +2,19 @@ pragma solidity ^0.8.7;
 
 import "./Manager.sol";
 
-contract Card {
-    uint256 public idNumber;
+contract Request {
+    address public userAddress;
     string public ipfsHash;
 
     Manager parentContract;
 
     constructor(
         Manager _parentContract,
-        uint256 _idNumber,
+        address _address,
         string memory _ipfsHash
     ) public {
         parentContract = _parentContract;
-        idNumber = _idNumber;
+        userAddress = _address;
         ipfsHash = _ipfsHash;
     }
 
