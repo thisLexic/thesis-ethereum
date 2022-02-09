@@ -1,12 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { useHistory, Link } from 'react-router-dom';
-import EthCrypto from 'eth-crypto';
 import axios from "axios"
-import CardManager from "./contracts/CardManager.json";
-import getWeb3 from "./getWeb3";
 
 const Register = (s) => {
-    let history = useHistory();
+
     const [state, setState] = useState({});
 
     useEffect(() => {
@@ -27,7 +23,7 @@ const Register = (s) => {
 
     const handleLogin = async (e) => {
         e.preventDefault();
-        if (input.password != input.confirmPassword) alert("Passwords do not match!")
+        if (input.password !== input.confirmPassword) alert("Passwords do not match!")
 
         const newUser = {
             user: input.user,

@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { useHistory } from 'react-router-dom';
 import Register from "./Register"
 import Login from "./Login"
 
@@ -12,7 +11,6 @@ const Home = (s) => {
     }, [s.state])
 
     const [view, setView] = useState(true)
-    let history = useHistory();
 
     return (
         <div class="Home">

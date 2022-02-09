@@ -1,13 +1,7 @@
 import Table from 'react-bootstrap/Table';
-import React, { useEffect, useState } from "react";
-import { Redirect } from 'react-router-dom';
-import { useHistory } from 'react-router-dom';
+import React from "react";
 
-const Timeline = () => {
-    let history = useHistory();
-    const handleButton = async (e) => {
-        history.push("/apply/card");
-    }
+const Requests = () => {
 
     return (
         <div>
@@ -36,5 +30,5 @@ const Timeline = () => {
     );
 
 }
-export default Timeline;
+export default Requests;
 

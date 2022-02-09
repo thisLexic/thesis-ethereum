@@ -11,11 +11,12 @@ const Main = (s) => {
     setState(s.state);
   }, [s.state])
   useEffect(() => {
-    const navItems = ["/main","/main/profile","/main/timeline","/main/request"];
+    const navItems = ["/admin","/admin/requests","/admin/search"];
     let location =  window.location.pathname;
     
-    let currentIndex = navItems.indexOf(location)
-    let index = localStorage.getItem("current");
+    let currentIndex = navItems.indexOf(location);
+    console.log(currentIndex)
+    let index = localStorage.getItem("currentAdm");
     var current = document.getElementsByClassName(index);
 
       if (current.length===0 ) {
@@ -43,7 +44,7 @@ const Main = (s) => {
       var current = document.getElementsByClassName("current");
       current[0].className = current[0].className.replace(" current", "");
       this.className += " current";
-      localStorage.setItem("current", this.className.split(' ')[1])
+      localStorage.setItem("currentAdm", this.className.split(' ')[1])
     });
   }
   return (
@@ -53,12 +54,13 @@ const Main = (s) => {
       <div class="body">
         <div class="sidebar">
           <div>
-          <span className="navTitle"><Link to="/main" className="navbtn 0">u.id</Link></span>
+            <span className="navTitle"><Link to="/admin" className="navbtn 0">u.id</Link></span>
+            <span>ADMIN</span>
+            
           </div>
           <div>
-            <span><Link to="profile" className="navbtn 1">MY PROFILE</Link></span>
-            <span><Link to="timeline" className="navbtn 2">TIMELINE</Link></span>
-            <span><Link to="request" className="navbtn 3">REQUEST</Link></span>
+            <span><Link to="requests" className="navbtn 1">REQUESTS</Link></span>
+            <span><Link to="search" className="navbtn 2">SEARCH</Link></span>
 
           </div>
           <div>

@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { useHistory } from 'react-router-dom';
-import EthCrypto from 'eth-crypto';
-import axios from "axios"
-import Main from './Main';
+import { useNavigate } from 'react-router-dom';
+import axios from "axios";
 
 const Login = (s) => {
-    let history = useHistory();
+    let navigate = useNavigate();
     const [state, setState] = useState({});
     const [input, setInput] = useState({
         user: '',
@@ -31,12 +29,13 @@ const Login = (s) => {
         }
         await axios.post('http://localhost:3001/login', loginUser).then(
             res => {
-                if (res.data == 'Incorrect Username or Password.') {
+                if (res.data === 'Incorrect Username or Password.') {
                     alert(res.data)
                 } else {
                     alert(res.data)
                     localStorage.setItem("user", input.user)
-                    history.push("/main");
+                    if (input.user === "admin") return navigate("/admin");
+                    navigate("/main");
                 }
 
             }

@@ -150,7 +150,7 @@ body {
 
 .Main .body {
   display: grid;
-  grid-template-columns: 15% auto;
+  grid-template-columns: 250px auto;
   column-gap: 1em;
   height:100%;
   margin: 0 0 0 1em;
@@ -166,6 +166,10 @@ body {
   
 }
 
+.current {
+  font-weight: bolder;
+}
+
 .noCard {
   margin: 0;
   display: flex;
@@ -178,6 +182,14 @@ body {
 
 .sidebar div:first-child{
   display: flex;
+  flex-direction: column;
+  text-align: center;
+  justify-content: center;
+  color:white;
+}
+
+.navTitle{
+
   font-weight: bolder;
   flex-direction: column;
   text-align: center;
@@ -185,6 +197,7 @@ body {
   font-size: 2em;
   color: white;
 }
+
  
 .sidebar div:nth-child(2){
   display: flex;
@@ -271,11 +284,11 @@ body {
   padding: 1em;
   color: white;
 }
-#profile {
+.dashgridchild {
   grid-area: 2 / 1 / 3 / 2;
 }
 
-#profile {
+.dashgridchild {
   display: flex;
   width:100%;
   border-radius: 25px;
@@ -294,7 +307,7 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  width: 20em;
+  width: 30em;
   padding: 2em;
   border-radius: 25px;
   background: #F6F7F9;
@@ -314,6 +327,40 @@ body {
   font-weight: 900;
 }
 
+.profile {
+  display: flex;
+  flex-direction: column;
+
+}
+.search{
+  display: flex;
+  flex-direction: column;
+  text-align: center; 
+  justify-content: center;
+
+}
+.search h1 {
+  margin-bottom: 2em;
+}
+
+.search input {
+  width: 20vw;
+}
+
+.searchBar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  gap: 2em;
+}
+
+.result {
+  display: flex;
+  flex-direction: column;
+  text-align: start;
+
+}
+
 select {
   margin:10px 0;
   background-color: white;
@@ -323,6 +370,8 @@ select {
   box-sizing: border-box;
   font-family: "gotham"
 }
+
+
 
 
 ul {
@@ -388,27 +437,6 @@ a:visited {
   padding-top: 1em;
 }
 
-.ViewCard {
-  display: flex;
-  flex-direction: column;
-  justify-content: left;
-  text-align: left;
-  margin:0 15vw;
-  padding-top: 2em;
-  
-}
-
-.search{
-  display: flex;
-  flex-direction: row;
-  text-align: center; 
-  justify-content: center;
-  gap: 2em;
-}
-
-.search input {
-  width: 20vw;
-}
 
 .cpdModal input {
   width: 14vw;
@@ -475,10 +503,6 @@ input {
   margin:.25em;
 }
 
-.results {
-  padding: 20px 0;
-}
-
 .card div:nth-child(2) {
   width: 100%;
   color: white;
@@ -523,4 +547,12 @@ input {
 
 button:active {
   background-color: #1E269E;
+}
+
+.sidebar a {
+  color: white;
+}
+
+.sidebar a:visited {
+  color: white;
 }

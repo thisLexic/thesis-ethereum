@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from 'react-router-dom';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { useEffect, useState } from "react";
 import CardManager from "./contracts/CardManager.json";
 import getWeb3 from "./getWeb3";
@@ -54,7 +54,7 @@ const Navbar = () => {
 
 
       </div>
-      <Switch>
+      <Routes>
         <Route exact path="/">
           <Home state={state}/>
         </Route>
@@ -64,7 +64,7 @@ const Navbar = () => {
         <Route path="/viewCard">
           <ViewCard state={state} />
         </Route>
-      </Switch>
+      </Routes>
     </Router>
   )
 

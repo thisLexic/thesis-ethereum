@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 
 const CPDForm = (s) => {
-    let history = useHistory();
+    let navigate = useNavigate();
     const [input, setInput] = useState({
         user: '',
         password: ''
     })
 
     const handleButton = async (e) => {
-        history.push("/main");
+        navigate("/main");
     }
 
     const handleChange = (e) => {
