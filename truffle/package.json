@@ -1,13 +1,13 @@
 {
   "dependencies": {
-<<<<<<< HEAD
     "@truffle/hdwallet-provider": "^2.0.0",
     "bcrypt": "^5.0.1",
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",
     "eth-crypto": "^2.1.0",
     "express": "^4.17.2",
-    "mongoose": "^6.1.9"
+    "mongoose": "^6.1.9",
+    "@openzeppelin/contracts": "^4.4.2"
   },
   "scripts": {
     "start": "node server.js"
@@ -22,9 +22,4 @@
   "author": "",
   "license": "ISC",
   "description": ""
-=======
-    "@openzeppelin/contracts": "^4.4.2",
-    "dotenv": "^10.0.0"
-  }
->>>>>>> fc7251022bbf906df8c9b38e4b0497e130bedd67
 }

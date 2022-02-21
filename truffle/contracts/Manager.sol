@@ -9,13 +9,13 @@ contract Manager is AccessControl {
     bytes32 public constant PRC_EMP_ROLE = keccak256("PRC_EMP_ROLE");
     bytes32 public constant PRC_PROF_ROLE = keccak256("PRC_PROF_ROLE");
 
-    event CreateCardEvent(uint256 indexed _idNumber, string _ipfsHash);
-    event EditCardEvent(uint256 indexed _idNumber, string _ipfsHash);
-    event RenewCardEvent(uint256 indexed _idNumber, string _ipfsHash);
+    event CreateCardEvent(uint256 indexed _idNumber, string _ipfsHash, uint256 _time);
+    event EditCardEvent(uint256 indexed _idNumber, string _ipfsHash, uint256 _time);
+    event RenewCardEvent(uint256 indexed _idNumber, string _ipfsHash, uint256 _time);
 
-    event RequestCardEvent(address indexed _address, string _ipfsHash);
-    event RequestCPDUnitsEvent(address indexed _address, string _ipfsHash);
-    event RequestRenewalEvent(address indexed _address, string _ipfsHash);
+    event RequestCardEvent(address indexed _address, string _ipfsHash, uint256 _time);
+    event RequestCPDUnitsEvent(address indexed _address, string _ipfsHash, uint256 _time);
+    event RequestRenewalEvent(address indexed _address, string _ipfsHash, uint256 _time);
 
     struct P_Card {
         Card card;
@@ -47,7 +47,7 @@ contract Manager is AccessControl {
         onlyPRCEmployee
     {
         cards[_idNumber].card = new Card(this, _idNumber, _ipfsHash);
-        emit CreateCardEvent(_idNumber, _ipfsHash);
+        emit CreateCardEvent(_idNumber, _ipfsHash, block.timestamp);
     }
 
     function editCard(uint256 _idNumber, string memory _ipfsHash)
@@ -55,7 +55,7 @@ contract Manager is AccessControl {
         onlyPRCEmployee
     {
         cards[_idNumber].card = new Card(this, _idNumber, _ipfsHash);
-        emit EditCardEvent(_idNumber, _ipfsHash);
+        emit EditCardEvent(_idNumber, _ipfsHash, block.timestamp);
     }
 
     function renewCard(uint256 _idNumber, string memory _ipfsHash)
@@ -63,7 +63,7 @@ contract Manager is AccessControl {
         onlyPRCEmployee
     {
         cards[_idNumber].card = new Card(this, _idNumber, _ipfsHash);
-        emit RenewCardEvent(_idNumber, _ipfsHash);
+        emit RenewCardEvent(_idNumber, _ipfsHash, block.timestamp);
     }
 
     function viewCard(uint256 _idNumber)
@@ -86,10 +86,9 @@ contract Manager is AccessControl {
 
     function requestCard(address _address, string memory _ipfsHash)
         public
-        onlyPRCProfessional
     {
         requests[_address].request = new Request(this, _address, _ipfsHash);
-        emit RequestCardEvent(msg.sender, _ipfsHash);
+        emit RequestCardEvent(msg.sender, _ipfsHash, block.timestamp);
     }
 
     function requestCPDUnits(address _address, string memory _ipfsHash)
@@ -97,7 +96,7 @@ contract Manager is AccessControl {
         onlyPRCProfessional
     {
         requests[_address].request = new Request(this, _address, _ipfsHash);
-        emit RequestCPDUnitsEvent(_address, _ipfsHash);
+        emit RequestCPDUnitsEvent(_address, _ipfsHash, block.timestamp);
     }
 
     function requestRenewal(address _address, string memory _ipfsHash)
@@ -105,7 +104,7 @@ contract Manager is AccessControl {
         onlyPRCProfessional
     {
         requests[_address].request = new Request(this, _address, _ipfsHash);
-        emit RequestRenewalEvent(_address, _ipfsHash);
+        emit RequestRenewalEvent(_address, _ipfsHash, block.timestamp);
     }
 
     function viewRequest(address _address)

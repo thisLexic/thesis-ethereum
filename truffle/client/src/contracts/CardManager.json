@@ -75,7 +75,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [
@@ -148,7 +149,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     }
   ],
   "metadata": "{\"compiler\":{\"version\":\"0.8.7+commit.e28d00a7\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"_idNumber\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"string\",\"name\":\"_ipfsHash\",\"type\":\"string\"}],\"name\":\"CreateCardEvent\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"_idNumber\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"string\",\"name\":\"_ipfsHash\",\"type\":\"string\"}],\"name\":\"EditCardEvent\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"_idNumber\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"string\",\"name\":\"_ipfsHash\",\"type\":\"string\"}],\"name\":\"RenewCardEvent\",\"type\":\"event\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"cards\",\"outputs\":[{\"internalType\":\"contract Card\",\"name\":\"card\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_idNumber\",\"type\":\"uint256\"},{\"internalType\":\"string\",\"name\":\"_ipfsHash\",\"type\":\"string\"}],\"name\":\"createCard\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_idNumber\",\"type\":\"uint256\"},{\"internalType\":\"string\",\"name\":\"_ipfsHash\",\"type\":\"string\"}],\"name\":\"editCard\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_idNumber\",\"type\":\"uint256\"},{\"internalType\":\"string\",\"name\":\"_ipfsHash\",\"type\":\"string\"}],\"name\":\"renewCard\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_idNumber\",\"type\":\"uint256\"}],\"name\":\"viewCard\",\"outputs\":[{\"internalType\":\"string\",\"name\":\"ipfsHash\",\"type\":\"string\"}],\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"project:/contracts/CardManager.sol\":\"CardManager\"},\"evmVersion\":\"london\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"project:/contracts/Card.sol\":{\"keccak256\":\"0x33240f65dd74c6eacdcd331d79a7d3a44d110270bb510a8b029bac4e5f177507\",\"urls\":[\"bzz-raw://953e798137cb933ba58ec7f7a0453ae74775f069954e3edcab45c078a250d8e3\",\"dweb:/ipfs/Qmaj2hfaKft5ea7NMLtuM9f8nx1p49kZGK31Ma1aR5okQH\"]},\"project:/contracts/CardManager.sol\":{\"keccak256\":\"0x06b3febd2f9315753870de97188a8307606efae5d5c0efb7b0da396bb20b9137\",\"urls\":[\"bzz-raw://faecffc06245ec665e3af216ee5eca112b56a93cf725354f055f5f4930d21e92\",\"dweb:/ipfs/QmWKfbxtc5ExkU2zpMi2M1CmQ3XhccFVeXD9KtkrHG6LXW\"]}},\"version\":1}",
@@ -7549,12 +7551,13 @@
     "5777": {
       "events": {},
       "links": {},
-      "address": "0xcfceDEA471bC397c2D2Da6ecAF23B9cCD254fA30",
-      "transactionHash": "0x04d56d5d32163d64a26472de16a3f9db3317bd8c573b77af83084e3e16f08d64"
+      "address": "0x3f8F8A65071070F9185A8584eDc5Fa141939AE56",
+      "transactionHash": "0xd68eaa457b2e127498f8394cbb3a3715f4c864e19c341ac101625962716f8fad"
     }
   },
   "schemaVersion": "3.4.3",
-  "updatedAt": "2022-02-09T11:49:13.466Z",
+  "updatedAt": "2022-02-11T04:39:15.121Z",
+  "networkType": "ethereum",
   "devdoc": {
     "kind": "dev",
     "methods": {},

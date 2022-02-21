@@ -3,12 +3,6 @@ import axios from "axios"
 
 const Register = (s) => {
 
-    const [state, setState] = useState({});
-
-    useEffect(() => {
-        setState(s.state);
-      }, [s.state])
-
     const [input, setInput] = useState({
         user: '',
         password: '',
@@ -28,8 +22,11 @@ const Register = (s) => {
         const newUser = {
             user: input.user,
             password: input.password,
-            address: state.accounts[0]
+            address: s.state.accounts[0]
         }
+        await s.state.contract.methods
+            .addPRCProfessional(s.state.accounts[0])
+            .send({ from: "0xF43d5012E79E163f621582ddBd77708C7dd81ecc" });
 
         axios.post('http://localhost:3001/register', newUser)
     }

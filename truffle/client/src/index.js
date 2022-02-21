@@ -21,7 +21,9 @@ import AdminMain from "./Admin/AdminMain";
 import Requests from "./Admin/Requests";
 import Search from "./Admin/Search";
 
-export { Default, Timeline, Dashboard, Request, Profile, CPDForm, CardForm, Home, Main, AdminMain, Requests, Search }
+import Permissions from "./Permissions";
+
+export { Default, Timeline, Dashboard, Request, Profile, CPDForm, CardForm, Home, Main, AdminMain, Requests, Search, Permissions }
 
 ReactDOM.render(<BrowserRouter><App /></BrowserRouter>, document.getElementById('root'));
 

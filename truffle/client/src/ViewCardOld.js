@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import Table from 'react-bootstrap/Table';
-import AddCPDUnits from '../AddCPDUnits';
+import AddCPDUnits from './AddCPDUnits';
 import { create } from 'ipfs-http-client';
 import EthCrypto from 'eth-crypto';
 
-const Search = (s) => {
+
+const ViewCard = (s) => {
   const ipfs = create({ host: 'ipfs.infura.io', port: '5001', protocol: 'https' })
   const [state, setState] = useState({});
   const [modalStatus, setModalStatus] = useState({
@@ -56,7 +57,7 @@ const Search = (s) => {
     fetch(`https://ipfs.infura.io/ipfs/${result}`)
       .then((response) => response.json())
       .then((responseJson) => {
-        EthCrypto.decryptWithPrivateKey(currentAcc.privateKey, responseJson).then(e =>
+        EthCrypto.decryptWithPrivateKey(currentAcc.privateKey,responseJson).then(e =>
           setResult(JSON.parse(e))
         )
       })
@@ -143,11 +144,17 @@ const Search = (s) => {
 
 
 
+  if (!state.web3) {
+    return <div></div>;
+  }
   return (
 
-    <div class="search">
-      <h1>Search</h1>
-      <div className="searchBar">
+    <div class="ViewCard">
+
+      <div class="title">
+        <h3>View Card</h3>
+      </div>
+      <div class="search">
         <input
           type="text"
           name="idNumber"
@@ -160,37 +167,48 @@ const Search = (s) => {
         </button>
       </div>
 
-      <div class="result">
+      <div class="card">
         <div>
-          <div>
-            <h4>{!result.idNumber && <span>&nbsp;</span>}{result.lastName}</h4>
-            <span>Last Name</span>
+          <img src="person.png" />
+          <div class="cpd">
+            <h4>Current CPD Units: {result.cpdUnits}</h4>
           </div>
-          <div>
-            <h4>{!result.idNumber && <span>&nbsp;</span>}{result.firstName}</h4>
-            <span>First Name</span>
-          </div>
-          <div>
-            <h4>{!result.idNumber && <span>&nbsp;</span>}{result.middleName}</h4>
-            <span>Middle Name</span>
-          </div>
-          <div>
-            <h4>{!result.idNumber && <span>&nbsp;</span>}{result.idNumber}</h4>
-            <span>Registration No.</span>
-          </div>
-          <div>
-            <h4>{!result.idNumber && <span>&nbsp;</span>}{result.regDate}</h4>
-            <span>Registration Date</span>
-          </div>
-          <div>
-            <h4>{!result.idNumber && <span>&nbsp;</span>}{result.validUntil}</h4>
-            <span>Valid Until</span>
-          </div>
-          <div>
-            <h4>{!result.idNumber && <span>&nbsp;</span>}{result.profession}</h4>
-            <span>Profession</span>
-          </div>
+          {result.cpdUnits == "9" && <button type="button" onClick={() => handleRenewCard()}>
+            Renew
+          </button>}
         </div>
+        <div class="results">
+          <div>
+            <h4>Last Name</h4>
+            <h4>{!result.idNumber && <span>&nbsp;</span>}{result.lastName}</h4>
+          </div>
+          <div>
+            <h4>First Name</h4>
+            <h4>{!result.idNumber && <span>&nbsp;</span>}{result.firstName}</h4>
+          </div>
+          <div>
+            <h4>Middle Name</h4>
+            <h4>{!result.idNumber && <span>&nbsp;</span>}{result.middleName}</h4>
+          </div>
+          <div>
+            <h4>Registration No.</h4>
+            <h4>{!result.idNumber && <span>&nbsp;</span>}{result.idNumber}</h4>
+          </div>
+          <div>
+            <h4>Registration Date</h4>
+            <h4>{!result.idNumber && <span>&nbsp;</span>}{result.regDate}</h4>
+          </div>
+          <div>
+            <h4>Valid Until</h4>
+            <h4>{!result.idNumber && <span>&nbsp;</span>}{result.validUntil}</h4>
+          </div>
+          <div>
+            <h4>Profession</h4>
+            <h4>{!result.idNumber && <span>&nbsp;</span>}{result.profession}</h4>
+          </div>
+
+        </div>
+
 
       </div>
       {result.idNumber && <div class="edit">
@@ -240,4 +258,4 @@ const Search = (s) => {
   )
 }
 
-export default Search;
+export default ViewCard;

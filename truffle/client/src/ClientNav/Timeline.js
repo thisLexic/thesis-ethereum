@@ -1,16 +1,17 @@
-import Table from 'react-bootstrap/Table';
 import React from "react";
 
 const Timeline = () => {
 
     return (
-        <div>
-            <div>
-                <Table responsive>
+        <div className="timeline">
+        <h1>Timeline</h1>
+            <div className="table">
+                <table>
                     <thead>
                         <tr>
+                            <th></th>
                             <th>Date</th>
-                            <th>Transaction No.</th>
+                            
                             <th>Method</th>
                             <th>Status</th>
                         </tr>
@@ -24,7 +25,7 @@ const Timeline = () => {
               </tr>
             ))} */}
                     </tbody>
-                </Table>
+                </table>
             </div>
         </div>
     );

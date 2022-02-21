@@ -6,27 +6,32 @@ import CryptoJS from 'crypto-js';
 const CardForm = (s) => {
 
     const [state, setState] = useState({});
-    const [card, setCard] = useState({ cpdUnits: {} });
+    const [card, setCard] = useState({});
     useEffect(() => {
         setState(s.state);
-    }, [s.state])
+    }, [s])
 
     const ipfs = create({ host: 'ipfs.infura.io', port: '5001', protocol: 'https' })
 
     let navigate = useNavigate();
 
     const handleSubmit = async (e) => {
-        var encrypted = CryptoJS.AES.encrypt(JSON.stringify(card), 'secret key 123').toString();
-        
-        const ipfsresult = await ipfs.add(JSON.stringify(encrypted))
-        
-        await state.contract.methods
-        .requestCard(state.accounts[0], ipfsresult.path )
-        .send({ from: state.accounts[0] });
 
-        var bytes = CryptoJS.AES.decrypt(encrypted, 'secret key 123');
-        var originalText = bytes.toString(CryptoJS.enc.Utf8);
-        console.log(originalText);
+        try {
+            var encrypted = CryptoJS.AES.encrypt(JSON.stringify(card), 'secret key 123').toString();
+
+            const ipfsresult = await ipfs.add(JSON.stringify(encrypted))
+            console.log(state.contract)
+            await state.contract.methods
+                .requestCard(state.accounts[0], ipfsresult.path)
+                .send({ from: state.accounts[0] });
+            alert("Submitted!")
+        } catch(err) {
+            alert(err)
+
+        }
+
+
         navigate("/main");
     }
 
