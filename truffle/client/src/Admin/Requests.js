@@ -1,6 +1,5 @@
 
 import React, { useEffect, useState } from "react";
-import CryptoJS from 'crypto-js';
 import ViewCard from '../ViewCard';
 import ViewCPD from '../ViewCPD';
 import ViewRenew from '../ViewRenew';
@@ -115,13 +114,6 @@ const Requests = (s) => {
 
         )
         
-        // fetch(`https://ipfs.infura.io/ipfs/${transactions[index].ipfsHash}`)
-        //     .then((response) => response.json())
-        //     .then((encrypted) => {
-        //         var bytes = CryptoJS.AES.decrypt(encrypted, 'secret key 123');
-        //         var originalText = bytes.toString(CryptoJS.enc.Utf8);
-        //         
-        //     })
         setResultModal(true)
     }
 

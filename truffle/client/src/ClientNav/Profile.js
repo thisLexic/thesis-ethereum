@@ -49,10 +49,6 @@ const Profile = (s) => {
             axios.post('https://uid-server.karlocabugwang1.repl.co/decrypt', body).then(
                 res => {
                     let t = res.data
-                    let value = 0
-                    t.cpdUnits.forEach(e => {
-                        value += parseInt(e.units)
-                    })
                     setResult(t)
                 }
             )

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { create } from 'ipfs-http-client';
-import CryptoJS from 'crypto-js';
+import axios from "axios";
+
 
 const Search = (s) => {
   const ipfs = create({ host: 'ipfs.infura.io', port: '5001', protocol: 'https' })
@@ -40,13 +41,13 @@ const Search = (s) => {
         setResultModal(true);
         setResult({});
       } else {
-        fetch(`https://ipfs.infura.io/ipfs/${cardResult.returnValues._ipfsHash}`)
-        .then((response) => response.json())
-        .then((encrypted) => {
-          var bytes = CryptoJS.AES.decrypt(encrypted, 'secret key 123');
-          var originalText = bytes.toString(CryptoJS.enc.Utf8);
-          setResult(JSON.parse(originalText))
-        })
+        let body = {encrypted: cardResult.returnValues._ipfsHash}
+        axios.post('https://uid-server.karlocabugwang1.repl.co/decrypt', body).then(
+          res => {
+              let t = res.data
+              setResult(t)
+          }
+      )
       }
     }
 
