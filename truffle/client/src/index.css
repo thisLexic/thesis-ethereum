@@ -170,13 +170,12 @@ body {
   font-weight: bolder;
 }
 
-.noCard {
+.default {
   margin: 0;
   display: flex;
   flex-direction: column;
   text-align: center;
   justify-content: center;
-  gap:1em;
   font-weight: bold;
 }
 
@@ -251,6 +250,8 @@ body {
   
 }
 
+
+
 #card {
   display: grid;
   grid-template-columns: 30% 70%;
@@ -258,10 +259,13 @@ body {
   width:100%;
   font-size: 1em;
   aspect-ratio: 3.375/2.125;
-  
   background-color: #1E269E;
   border-radius: 25px;
   
+}
+
+#card span:nth-child(even) {
+  font-weight: bold;
 }
 
 .img {
@@ -289,10 +293,26 @@ body {
 }
 
 .dashgridchild {
-  display: flex;
   width:100%;
   border-radius: 25px;
   background-color: #1E269E;
+}
+
+.dashgridchild .request{
+  height:100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width:100%;
+  color:white;
+  font-weight: normal;
+  
+  gap:1em;
+}
+
+.dashgridchild .request span {
+  font-size: 1.375em;
 }
 
 .Form {
@@ -431,7 +451,10 @@ button{
   font-size: 1em;
   font-family: "gotham",
   sans-serif;
-  cursor: pointer;
+}
+
+button:hover {
+  background-color: #232cb7;
 }
 
 input {
@@ -466,6 +489,28 @@ input {
 
 .requests h1, .timeline h1  {
   text-align: center; 
+}
+
+.request{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 80%;
+}
+
+.cpdHistory{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.cpdHistory .table {
+  width: 100%;
+}
+
+.cpdHistory table {
+  padding: 0 !important;
 }
 
 table {
@@ -562,7 +607,6 @@ th {
   display: flex;
   padding: 2em;
   width: 30em;
-  height: 75%;
   margin: 0 auto;
   flex-direction: column;
   align-content: center;
@@ -595,10 +639,26 @@ button:active {
   background-color: #1E269E;
 }
 
+button:disabled {
+  background-color: gray;
+  
+}
+
 .sidebar a {
   color: white;
 }
 
 .sidebar a:visited {
   color: white;
+}
+
+.widget table {
+  padding: 0;
+  width: 90%;
+}
+
+.widget h2{
+  margin: auto;
+  padding: 1em;
+  
 }

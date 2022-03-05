@@ -9,9 +9,9 @@ contract Manager is AccessControl {
     bytes32 public constant PRC_EMP_ROLE = keccak256("PRC_EMP_ROLE");
     bytes32 public constant PRC_PROF_ROLE = keccak256("PRC_PROF_ROLE");
 
-    event CreateCardEvent(uint256 indexed _idNumber, string _ipfsHash, uint256 _time);
-    event EditCardEvent(uint256 indexed _idNumber, string _ipfsHash, uint256 _time);
-    event RenewCardEvent(uint256 indexed _idNumber, string _ipfsHash, uint256 _time);
+    event CreateCardEvent(address indexed _address, uint256 _idNumber, string _ipfsHash, uint256 _time);
+    event EditCardEvent(address indexed _address, uint256 _idNumber, string _ipfsHash, uint256 _time);
+    event RenewCardEvent(address indexed _address, uint256 _idNumber, string _ipfsHash, uint256 _time);
 
     event RequestCardEvent(address indexed _address, string _ipfsHash, uint256 _time);
     event RequestCPDUnitsEvent(address indexed _address, string _ipfsHash, uint256 _time);
@@ -25,7 +25,7 @@ contract Manager is AccessControl {
         Request request;
     }
 
-    mapping(uint256 => P_Card) public cards;
+    mapping(address => P_Card) public cards;
     mapping(address => P_Request) public requests;
 
     constructor(address root) public {
@@ -42,36 +42,36 @@ contract Manager is AccessControl {
         _;
     }
 
-    function createCard(uint256 _idNumber, string memory _ipfsHash)
+    function createCard(address _address, uint256 _idNumber, string memory _ipfsHash)
         public
         onlyPRCEmployee
     {
-        cards[_idNumber].card = new Card(this, _idNumber, _ipfsHash);
-        emit CreateCardEvent(_idNumber, _ipfsHash, block.timestamp);
+        cards[_address].card = new Card(this, _address, _idNumber, _ipfsHash);
+        emit CreateCardEvent(_address, _idNumber, _ipfsHash, block.timestamp);
     }
 
-    function editCard(uint256 _idNumber, string memory _ipfsHash)
+    function editCard(address _address, uint256 _idNumber, string memory _ipfsHash)
         public
         onlyPRCEmployee
     {
-        cards[_idNumber].card = new Card(this, _idNumber, _ipfsHash);
-        emit EditCardEvent(_idNumber, _ipfsHash, block.timestamp);
+        cards[_address].card = new Card(this, _address, _idNumber, _ipfsHash);
+        emit EditCardEvent(_address, _idNumber, _ipfsHash, block.timestamp);
     }
 
-    function renewCard(uint256 _idNumber, string memory _ipfsHash)
+    function renewCard(address _address, uint256 _idNumber, string memory _ipfsHash)
         public
         onlyPRCEmployee
     {
-        cards[_idNumber].card = new Card(this, _idNumber, _ipfsHash);
-        emit RenewCardEvent(_idNumber, _ipfsHash, block.timestamp);
+        cards[_address].card = new Card(this, _address, _idNumber, _ipfsHash);
+        emit RenewCardEvent(_address, _idNumber, _ipfsHash, block.timestamp);
     }
 
-    function viewCard(uint256 _idNumber)
+    function viewCard(address _address)
         public
         view
         returns (string memory ipfsHash)
     {
-        return (cards[_idNumber].card.getHash());
+        return (cards[_address].card.getHash());
     }
 
     // Professional

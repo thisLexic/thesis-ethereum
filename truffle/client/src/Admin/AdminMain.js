@@ -13,9 +13,7 @@ const Main = (s) => {
   useEffect(() => {
     const navItems = ["/admin","/admin/requests","/admin/search"];
     let location =  window.location.pathname;
-    
     let currentIndex = navItems.indexOf(location);
-    console.log(currentIndex)
     let index = localStorage.getItem("currentAdm");
     var current = document.getElementsByClassName(index);
 

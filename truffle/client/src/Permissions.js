@@ -5,16 +5,11 @@ import { useNavigate } from 'react-router-dom';
 const Permissions = (s) => {
     let navigate = useNavigate();
     const [input, setInput] = useState({})
-    const [state, setState] = useState({});
-    useEffect(() => {
-        setState(s.state);
-    }, [s])
 
     const handleButton = async (e) => {
-        await state.contract.methods
-            .addPRCProfessional(input.address)
-            .send({ from: "0xF43d5012E79E163f621582ddBd77708C7dd81ecc" });
-        navigate("/main");
+        await s.state.contract.methods
+            .addPRCEmployee(input.address)
+            .send({ from: s.state.accounts[0] });
     }
 
     const handleChange = (e) => {

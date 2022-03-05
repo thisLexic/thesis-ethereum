@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-const Timeline = (s) => {
+const TimelineWidget = (s) => {
     const [transactions, setTransactions] = useState([]);
     useEffect(() => {
         if (!s.state.contract) return;
@@ -106,7 +106,6 @@ const Timeline = (s) => {
                     })
                 }
             )
-            
             setTransactions(eventList.sort((a, b) => {
                 return b.blockNumber - a.blockNumber;
             }))
@@ -115,8 +114,8 @@ const Timeline = (s) => {
         getEvents()
     }, [s.state])
     return (
-        <div className="timeline">
-        <h1>Timeline</h1>
+        <div className="timeline widget">
+            <h2>Timeline</h2>
             <div className="table">
                 <table>
                     <thead>
@@ -147,5 +146,5 @@ const Timeline = (s) => {
     );
 
 }
-export default Timeline;
+export default TimelineWidget;
 

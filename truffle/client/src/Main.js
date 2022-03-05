@@ -3,13 +3,7 @@ import { Link, Outlet } from 'react-router-dom';
 
 
 const Main = (s) => {
-  const [state, setState] = useState({});
 
-  
-
-  useEffect(() => {
-    setState(s.state);
-  }, [s.state])
   useEffect(() => {
     const navItems = ["/main","/main/profile","/main/timeline","/main/request"];
     let location =  window.location.pathname;

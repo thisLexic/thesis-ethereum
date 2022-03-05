@@ -4,15 +4,11 @@ import axios from "axios";
 
 const Login = (s) => {
     let navigate = useNavigate();
-    const [state, setState] = useState({});
     const [input, setInput] = useState({
         user: '',
         password: ''
     })
 
-    useEffect(() => {
-        setState(s.state);
-      }, [s.state])
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -25,17 +21,20 @@ const Login = (s) => {
         
         const loginUser = {
             user: input.user,
-            password: input.password
+            password: input.password,
+            address: s.state.accounts[0]
         }
-        await axios.post('http://localhost:3001/login', loginUser).then(
+        
+        await axios.post('https://uid-server.karlocabugwang1.repl.co/login', loginUser).then(
             res => {
-                if (res.data === 'Incorrect Username or Password.') {
-                    alert(res.data)
-                } else {
+                if (res.data === 'Login Successful!') {
                     alert(res.data)
                     localStorage.setItem("user", input.user)
                     if (input.user === "admin") return navigate("/admin");
                     navigate("/main");
+                } else {
+                    alert(res.data)
+                    
                 }
 
             }

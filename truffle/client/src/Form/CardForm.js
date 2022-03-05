@@ -1,31 +1,25 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from 'react-router-dom';
-import { create } from 'ipfs-http-client';
-import CryptoJS from 'crypto-js';
+import axios from "axios"
 
 const CardForm = (s) => {
-
-    const [state, setState] = useState({});
     const [card, setCard] = useState({});
-    useEffect(() => {
-        setState(s.state);
-    }, [s])
-
-    const ipfs = create({ host: 'ipfs.infura.io', port: '5001', protocol: 'https' })
 
     let navigate = useNavigate();
 
     const handleSubmit = async (e) => {
 
         try {
-            var encrypted = CryptoJS.AES.encrypt(JSON.stringify(card), 'secret key 123').toString();
-
-            const ipfsresult = await ipfs.add(JSON.stringify(encrypted))
-            console.log(state.contract)
-            await state.contract.methods
-                .requestCard(state.accounts[0], ipfsresult.path)
-                .send({ from: state.accounts[0] });
-            alert("Submitted!")
+            await axios.post('https://uid-server.karlocabugwang1.repl.co/encrypt', card).then(
+                async res => {
+                    await s.state.contract.methods
+                .requestCard(s.state.accounts[0], res.data)
+                .send({ from: s.state.accounts[0] });
+                alert("Submitted!")
+                })
+            
+            
+            
         } catch(err) {
             alert(err)
 

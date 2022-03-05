@@ -1,17 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from 'react-router-dom';
-import Manager from "../contracts/Manager.json";
-import getWeb3 from "../getWeb3";
-
-
 
 const Default = (s) => {
   let navigate = useNavigate();
   const [status, setStatus] = useState();
   useEffect(() => {
-    
+
     if (Object.keys(s.state).length != 0) {
-      s.state.contract.getPastEvents("RequestCPDUnitsEvent", { fromBlock: 0 }).then(
+      s.state.contract.getPastEvents("RequestCardEvent", { fromBlock: 0, filter: { _address: s.state.accounts[0] } }).then(
         element => {
           if (Object.keys(element).length) return setStatus(false)
           setStatus(true)
@@ -26,12 +22,24 @@ const Default = (s) => {
   }
   return (
 
-    <div class="noCard">
-      {status ? <span>"You do not currently have a u.id card."</span> : <span>"Your card is being processed."</span>}
-      <button
-        onClick={e => handleButton(e)}>
-        Apply for a Card
-    </button>
+    <div class="default">
+      {status ?
+        <div>
+          <div>
+            <span>You do not currently have a u.id card.</span>
+          </div>
+          <div>
+            <button
+              onClick={e => handleButton(e)}>
+              Apply for a Card
+      </button>
+          </div>
+
+        </div>
+        : <div>
+          <span>Your card is being processed.</span>
+        </div>}
+
     </div>
   );
 
