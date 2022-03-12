@@ -60,7 +60,7 @@ const Dashboard = (s) => {
 
         var body = { encrypted: sorted[0].ipfsHash }
 
-        axios.post('https://uid-server.karlocabugwang1.repl.co/decrypt', body).then(
+        axios.post('https://uid-server.herokuapp.com/decrypt', body).then(
           res => {
             let t = res.data
             let value = 0

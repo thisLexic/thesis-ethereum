@@ -7,17 +7,17 @@ module.exports = {
   // to customize your Truffle configuration!
   contracts_build_directory: path.join(__dirname, "client/src/contracts"),
   networks: {
-    develop: {
-      port: 7545,
-      host: "127.0.0.1",
-      network_id: '*'
-    },
+    // develop: {
+    //   port: 7545,
+    //   host: "127.0.0.1",
+    //   network_id: '*'
+    // },
     ropsten: {
       provider: function() {
         return new HDWalletProvider(
           process.env.MNEMONIC,
-          "https://ropsten.infura.io/v3/f5588710d64840cc83983bf57aa8a635",
-          1)
+          "https://ropsten.infura.io/v3/0fdd71528f4e462aa85b511ebc7964e5",
+          3)
       },
       network_id: 3,
       gas: 4000000      //make sure this gas allocation isn't over 4M, which is the max

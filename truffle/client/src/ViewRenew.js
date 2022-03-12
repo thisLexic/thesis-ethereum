@@ -20,7 +20,7 @@ const ViewRenew = (s) => {
         card.cpdUnits = [];
 
         try {
-            await axios.post('https://uid-server.karlocabugwang1.repl.co/encrypt', card).then(
+            await axios.post('https://uid-server.herokuapp.com/encrypt', card).then(
                 async res => {
                     await s.state.contract.methods
                         .renewCard(card.address, card.id, res.data)

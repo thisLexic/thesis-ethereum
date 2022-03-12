@@ -25,7 +25,7 @@ const Login = (s) => {
             address: s.state.accounts[0]
         }
         
-        await axios.post('https://uid-server.karlocabugwang1.repl.co/login', loginUser).then(
+        await axios.post('https://uid-server.herokuapp.com/login', loginUser).then(
             res => {
                 if (res.data === 'Login Successful!') {
                     alert(res.data)

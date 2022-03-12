@@ -26,14 +26,43 @@ const Search = (s) => {
     if (isNaN(parseInt(idNumber))) {
       setModalStatus("Please input an integer.")
       setResultModal(true);
-      
+
     }
     else {
-      let cardList = await s.state.contract.getPastEvents("RenewCardEvent", { fromBlock: 0})
+      let eventList = []
+      await s.state.contract.getPastEvents("CreateCardEvent", { fromBlock: 0}).then(
+        events => {
+          events.forEach(async e => {
+            eventList.push(e)
+          })
+        }
+      )
+
+      await s.state.contract.getPastEvents("EditCardEvent", { fromBlock: 0}).then(
+        events => {
+          events.forEach(async e => {
+            eventList.push(e)
+          })
+        }
+      )
+
+      await s.state.contract.getPastEvents("RenewCardEvent", { fromBlock: 0}).then(
+        events => {
+          events.forEach(async e => {
+            eventList.push(e)
+          })
+        }
+      )
+      let sorted = eventList.sort((a, b) => {
+        return b.blockNumber - a.blockNumber;
+      })
+
       let cardResult = {}
-      cardList.forEach(e => {
+      console.log(sorted)
+      sorted.forEach(e => {
         if (e.returnValues._idNumber === idNumber) {
           cardResult = e
+          console.log(e)
         }
       })
       if (Object.entries(cardResult).length === 0) {
@@ -42,12 +71,13 @@ const Search = (s) => {
         setResult({});
       } else {
         let body = {encrypted: cardResult.returnValues._ipfsHash}
-        axios.post('https://uid-server.karlocabugwang1.repl.co/decrypt', body).then(
+        axios.post('https://uid-server.herokuapp.com/decrypt',body).then(
           res => {
-              let t = res.data
-              setResult(t)
+            let t = res.data
+            console.log(t)
+            setResult(t)
           }
-      )
+        )
       }
     }
 

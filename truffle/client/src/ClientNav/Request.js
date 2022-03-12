@@ -52,7 +52,7 @@ const Request = (s) => {
                 return b.blockNumber - a.blockNumber;
             })
             var body = { encrypted: sorted[0].ipfsHash }
-            axios.post('https://uid-server.karlocabugwang1.repl.co/decrypt', body).then(
+            axios.post('https://uid-server.herokuapp.com/decrypt', body).then(
                 res => {
                     let t = res.data
                     setResult(t)
@@ -73,7 +73,7 @@ const Request = (s) => {
     const handleButton = async (e) => {
 
         try {
-            await axios.post('https://uid-server.karlocabugwang1.repl.co/encrypt', result).then(
+            await axios.post('https://uid-server.herokuapp.com/encrypt', result).then(
                 async res => {
                     await s.state.contract.methods
                         .requestRenewal(s.state.accounts[0], res.data)

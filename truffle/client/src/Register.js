@@ -25,7 +25,12 @@ const Register = (s) => {
             address: s.state.accounts[0]
         }
 
-        axios.post('https://uid-server.karlocabugwang1.repl.co/register', newUser)
+        axios.post('https://uid-server.herokuapp.com/register', newUser).then(
+            res => {
+                alert(res.data)
+
+            }
+        )
     }
 
     return (

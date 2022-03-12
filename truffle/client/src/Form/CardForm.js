@@ -10,7 +10,7 @@ const CardForm = (s) => {
     const handleSubmit = async (e) => {
 
         try {
-            await axios.post('https://uid-server.karlocabugwang1.repl.co/encrypt', card).then(
+            await axios.post('https://uid-server.herokuapp.com/encrypt', card).then(
                 async res => {
                     await s.state.contract.methods
                 .requestCard(s.state.accounts[0], res.data)

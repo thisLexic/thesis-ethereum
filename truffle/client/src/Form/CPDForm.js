@@ -52,7 +52,7 @@ const CPDForm = (s) => {
             })
             var body = { encrypted: sorted[0].ipfsHash }
 
-            axios.post('https://uid-server.karlocabugwang1.repl.co/decrypt', body).then(
+            axios.post('https://uid-server.herokuapp.com/decrypt', body).then(
                 res => {
                     let t = res.data
                     let value = 0
@@ -76,7 +76,7 @@ const CPDForm = (s) => {
         console.log(t)
 
         try {
-            await axios.post('https://uid-server.karlocabugwang1.repl.co/encrypt', t).then(
+            await axios.post('https://uid-server.herokuapp.com/encrypt', t).then(
                 async res => {
                     await s.state.contract.methods
                         .requestCPDUnits(s.state.accounts[0], res.data)

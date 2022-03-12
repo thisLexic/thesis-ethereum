@@ -18,7 +18,7 @@ const ViewCard = (s) => {
         card.archivedUnits = [];
 
         try {
-            await axios.post('https://uid-server.karlocabugwang1.repl.co/encrypt', card).then(
+            await axios.post('https://uid-server.herokuapp.com/encrypt', card).then(
                 async res => {
                     await s.state.contract.methods
                         .createCard(s.result.address, events.length + 1, res.data)
